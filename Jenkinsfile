@@ -27,7 +27,7 @@ node ("messaging-ci-01.vm2") {
             [ $class: 'StringParameterValue', name: 'release-version', value: '7.2.0' ],
             [ $class: 'StringParameterValue', name: 'milestone', value: 'CR1' ],
             [ $class: 'StringParameterValue', name: 'artemis-hawtio-branch', value: '1.0.4.CR1' ],
-            [ $class: 'StringParameterValue', name: 'activemq-artemis-branch', value: 'master.pnc' ],
+            [ $class: 'StringParameterValue', name: 'activemq_artemis_branch', value: 'master.pnc' ],
             [ $class: 'StringParameterValue', name: 'amq-jon-plugin-branch', value: 'amq-1.0.0.GA' ],
             [ $class: 'StringParameterValue', name: 'amq-broker-branch', value: '7.3.x.pnc' ],
             [ $class: 'StringParameterValue', name: 'pig-build-config-version', value: '7.2' ]
