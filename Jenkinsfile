@@ -32,7 +32,9 @@ node ("messaging-ci-01.vm2") {
         ],
         propagate: false
         )
+        sh "echo running"
         build_url = ${amq.absoluteUrl}
+        sh "echo $build_url"
         sh "rm -f REPOSITORY_COORDINATES.properties"
         sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/extras/REPOSITORY_COORDINATES.properties"
         amq_broker_redhat_version = sh(script: "grep amq-broker_SCM_REVISION REPOSITORY_COORDINATES.properties|cut -d'=' -f2", returnStdout: true)
