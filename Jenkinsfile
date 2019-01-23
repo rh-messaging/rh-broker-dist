@@ -2,6 +2,8 @@ import groovy.json.JsonSlurperClassic
 
 def amqZipUrl
 def amq_broker_version
+def amq_broker_redhat_version
+def build_url
 
 node ("messaging-ci-01.vm2") {
     stage('prepare amq master prod branch') {
@@ -20,25 +22,36 @@ node ("messaging-ci-01.vm2") {
         propagate: false
         )
     }
-    stage('build amq 7.2') {
+    stage('build amq 7.3') {
         def amq = build(
         job: 'amq-pnc-build',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'release-version', value: '7.2.0' ],
+            [ $class: 'StringParameterValue', name: 'release-version', value: '7.3.0' ],
             [ $class: 'StringParameterValue', name: 'milestone', value: 'CR1' ],
-            [ $class: 'StringParameterValue', name: 'artemis-hawtio-branch', value: '1.0.4.CR1' ],
-            [ $class: 'StringParameterValue', name: 'activemq_artemis_branch', value: 'master.pnc' ],
-            [ $class: 'StringParameterValue', name: 'amq-jon-plugin-branch', value: 'amq-1.0.0.GA' ],
-            [ $class: 'StringParameterValue', name: 'amq-broker-branch', value: '7.3.x.pnc' ],
-            [ $class: 'StringParameterValue', name: 'pig-build-config-version', value: '7.2' ]
+            [ $class: 'StringParameterValue', name: 'pig-build-config-version', value: '7.3' ]
         ],
         propagate: false
         )
+        build_url = ${amq.absoluteUrl}
+        sh "rm -f REPOSITORY_COORDINATES.properties"
         sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/extras/REPOSITORY_COORDINATES.properties"
-        sh "amq_broker_version=`grep amq-broker_SCM_REVISION REPOSITORY_COORDINATES.properties|cut -d'=' -f2`"
-        amqZipUrl = "${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/amq-broker-${amq_broker_version}-bin.zip"
+        amq_broker_redhat_version = sh(script: "grep amq-broker_SCM_REVISION REPOSITORY_COORDINATES.properties|cut -d'=' -f2", returnStdout: true)
+        sh "echo amq_broker_redhat_version $amq_broker_redhat_version"
+        amq_broker_version = amq_broker_redhat_version.substring(0, amq_broker_redhat_version.indexOf('-'))
+        sh "echo amq_broker_version amq_broker_version"
     }
-    stage('kick-off-test-suites') {
-        sh "echo binary at ${amqZipUrl}"
+    stage ("Send Email") {
+        build(
+        job: 'sendSuccessEmail',
+        parameters: [
+            [ $class: 'StringParameterValue', name: 'AMQ_VERSION', value: '7.3' ],
+            [ $class: 'StringParameterValue', name: 'BUILD_URL', value: build_url ],
+            [ $class: 'StringParameterValue', name: 'BUILD_ID', value: '101' ],
+            [ $class: 'StringParameterValue', name: 'amq_broker_version', value: amq_broker_version ],
+            [ $class: 'StringParameterValue', name: 'amq_broker_redhat_version', value: amq_broker_redhat_version ]
+        ],
+        propagate: false
+        )
+
     }
 }
