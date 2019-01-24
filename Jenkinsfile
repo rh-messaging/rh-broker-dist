@@ -59,7 +59,6 @@ node ("messaging-ci-01.vm2") {
         parameters: [
             [ $class: 'StringParameterValue', name: 'AMQ_VERSION', value: '7.3' ],
             [ $class: 'StringParameterValue', name: 'BUILD_URL', value: build_url ],
-            [ $class: 'StringParameterValue', name: 'BUILD_ID', value: '101' ],
             [ $class: 'StringParameterValue', name: 'amq_broker_version', value: amq_broker_version ],
             [ $class: 'StringParameterValue', name: 'amq_broker_redhat_version', value: amq_broker_redhat_version ]
         ],
