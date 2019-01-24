@@ -33,7 +33,7 @@ node ("messaging-ci-01.vm2") {
         propagate: false
         )
         sh "echo running"
-        build_url = ${amq.absoluteUrl}
+        build_url = "${amq.absoluteUrl}"
         sh "echo $build_url"
         sh "rm -f REPOSITORY_COORDINATES.properties"
         sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/extras/REPOSITORY_COORDINATES.properties"
