@@ -32,6 +32,17 @@ node ("messaging-ci-01.vm2") {
         ],
         propagate: false
         )
+        if (eap.result != 'SUCCESS') {
+          def emailBody = """
+            Building of AMQ failed.
+
+            See job for details: ${eap.absoluteUrl}
+          """.stripIndent().trim()
+          node {
+            emailext body: emailBody, subject: "AMQ Broker nightly prod build ${new Date().format('yyyy-MM-dd')}", to: 'broker-agile@redhat.com'
+            throw new Exception("Production job failed. Cannot continue.")
+          }
+        }
         sh "echo running"
         build_url = "${amq.absoluteUrl}"
         sh "echo $build_url"
