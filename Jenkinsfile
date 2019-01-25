@@ -32,7 +32,7 @@ node ("messaging-ci-01.vm2") {
         ],
         propagate: false
         )
-        if (eap.result != 'SUCCESS') {
+        if (amq.result != 'SUCCESS') {
           def emailBody = """
             Building of AMQ failed.
 
