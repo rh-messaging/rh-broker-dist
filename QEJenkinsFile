@@ -4,6 +4,7 @@ def build_id
 
 node () {
     stage('get stagger info') {
+        checkout scm
         sh "pwd"
         sh "ls"
         sh "sh ./scripts/getamq.sh"
