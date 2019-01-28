@@ -4,7 +4,7 @@ def build_id
 
 node () {
     stage('get stagger info') {
-        sh "sh ./scripts/getamq.sh"
+        sh "sh $WORKSPACE/scripts/getamq.sh"
         def props = readProperties  file:'build.properties'
         build_id= props['BUILDID']
         echo "build_id=${build_id}"
