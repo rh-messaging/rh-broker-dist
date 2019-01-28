@@ -1,15 +1,22 @@
 import groovy.json.JsonSlurperClassic
 
 def build_id
+def build_zip
+def build_tar
+def build_maven
 
 node () {
     stage('get stagger info') {
         checkout scm
-        sh "pwd"
-        sh "ls"
         sh "sh ./scripts/getamq.sh"
         def props = readProperties  file:'build.properties'
         build_id= props['BUILDID']
+        build_zip= props['BUILDZIP']
+        build_tar= props['BUILDTAR']
+        build_maven= props['BUILDMAVEN']
         echo "build_id=${build_id}"
+        echo "build_zip=${build_zip}"
+        echo "build_tar=${build_tar}"
+        echo "build_maven=${build_maven}"
     }
 }
