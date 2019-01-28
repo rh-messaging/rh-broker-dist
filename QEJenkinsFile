@@ -1,0 +1,7 @@
+import groovy.json.JsonSlurperClassic
+
+node () {
+    stage('get stagger info') {
+        sh "./scripts/getamq.sh
+    }
+}
