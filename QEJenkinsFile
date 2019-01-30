@@ -19,4 +19,14 @@ node () {
         echo "build_tar=${build_tar}"
         echo "build_maven=${build_maven}"
     }
+    stage ('build eap') {
+        job: 'amq-prepare-pnc-branch',
+        parameters: [
+            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/wildfly/' ],
+            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'messaging_upstream' ],
+            [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: '$build_zip']
+        ],
+        propagate: false
+        )
+    }
 }

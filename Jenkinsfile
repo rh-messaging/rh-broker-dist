@@ -57,6 +57,7 @@ node ("messaging-ci-01.vm2") {
         sh "echo amq_broker_version amq_broker_version"
     }
     stage ("Update Stagger") {
+        checkout scm
         sh "./scripts/pushamq.sh $build_id $build_url $amq_broker_version $amq_broker_redhat_version"
     }
     stage ("Send Email") {
