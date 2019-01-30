@@ -20,7 +20,7 @@ node () {
         echo "build_maven=${build_maven}"
     }
     stage ('build eap') {
-        build(
+        def eap = build(
         job: 'early-testing-messaging-prepare',
         parameters: [
             [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/wildfly/' ],
@@ -29,5 +29,8 @@ node () {
         ],
         propagate: false
         )
+        if (eap.result != 'SUCCESS') {
+            throw new Exception("EAP build job failed.")
+        }
     }
 }
