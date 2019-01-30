@@ -32,5 +32,36 @@ node () {
         if (eap.result != 'SUCCESS') {
             throw new Exception("EAP build job failed.")
         }
+        eapZipUrl = "${eap.absoluteUrl}/artifact/jboss-eap.zip"
+        clientsVersion = "${eap.absoluteUrl}/artifact/clients-version.txt".toURL().getText(authProps).trim()
+
+        steps {
+            parallel (
+                "early testing messaging tests ssl" : {
+                    build(
+                        job: 'early-testing-messaging-weekly-tests-ssl',
+                        parameters: [
+                        [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
+                        [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
+                        [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
+                        [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ]
+                        ],
+                        propagate: false
+                    )
+                },
+                "early testing messaging tests huge messages" : {
+                    build(
+                        job: 'early-testing-messaging-weekly-tests-huge-messages',
+                        parameters: [
+                        [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
+                        [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
+                        [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
+                        [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ]
+                        ],
+                        propagate: false
+                    )
+                }
+            )
+        }
     }
 }
