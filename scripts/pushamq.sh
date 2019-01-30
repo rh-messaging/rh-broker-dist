@@ -20,11 +20,11 @@ echo BUILD_URL = \"${BUILD_URL}\"
 echo BROKER_VERSION = \"${BROKER_VERSION}\"
 echo BROKER_REDHAT_VERSION = \"${BROKER_REDHAT_VERSION}\"
 
-ZIP_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_REDHAT_VERSION}-bin.tar.gz
+ZIP_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_REDHAT_VERSION}-bin.zip
 
 echo ZIP_URL = \"${ZIP_URL}\"
 
-TAR_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_REDHAT_VERSION}-bin.zip
+TAR_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_REDHAT_VERSION}-bin.tar.gz
 
 echo TAR_URL = \"${TAR_URL}\"
 
