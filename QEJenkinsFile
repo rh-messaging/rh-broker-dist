@@ -20,7 +20,7 @@ node () {
         echo "build_maven=${build_maven}"
     }
     stage ('build eap') {
-        job: 'amq-prepare-pnc-branch',
+        job: 'early-testing-messaging-prepare',
         parameters: [
             [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/wildfly/' ],
             [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'messaging_upstream' ],
