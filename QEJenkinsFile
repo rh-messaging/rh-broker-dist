@@ -89,6 +89,6 @@ node () {
     }
     stage('Collate Results') {
         writeFile file: "results.txt", text: buildRuns
-        archiveArtifacts artifacts: 'results.txt''
+        archiveArtifacts artifacts: 'results.txt'
     }
 }
