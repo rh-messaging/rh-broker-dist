@@ -40,31 +40,49 @@ node () {
         eapZipUrl = "${eap.absoluteUrl}/artifact/jboss-eap.zip"
         clientsVersion = "${eap.absoluteUrl}/artifact/clients-version.txt".toURL().getText(authProps).trim()
 
-        parallel (
-            "early testing messaging tests ssl" : {
-                build(
-                    job: 'early-testing-messaging-weekly-tests-ssl',
-                    parameters: [
-                    [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
-                    [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
-                    [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
-                    [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ]
-                    ],
-                    propagate: false
-                )
-            },
-            "early testing messaging tests huge messages" : {
-                build(
-                    job: 'early-testing-messaging-weekly-tests-huge-messages',
-                    parameters: [
-                    [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
-                    [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
-                    [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
-                    [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ]
-                    ],
-                    propagate: false
-                )
-            }
-        )
     }
+    stage('EAP Tests') {
+
+        def viewUrl = "https://mw-messaging-qe-jenkins.rhev-ci-vms.eng.rdu2.redhat.com/view/AMQ%20Broker%20Nightly/api/json".toURL()
+
+        def tasks = [:]
+        for (def job : getJobsFromView(viewUrl, authProps)) {
+          if (job.color == 'disabled') {
+            continue
+          }
+          def jobName = job.name
+          tasks[jobName] = {
+            build(
+              job: jobName,
+              parameters: [
+                [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
+                [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
+                [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: params.ARTEMIS_REPO ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: params.TESTSUITE_REPO ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: params.TESTSUITE_BRANCH ]
+              ],
+              propagate: false
+            )
+          }
+        }
+
+        def jobs = parallel(tasks)
+
+        def failedJobs = []
+        for (def build : jobs.values()) {
+            if (build.result != 'SUCCESS') {
+                failedJobs << build
+            }
+        }
+
+        if (failedJobs.empty) {
+
+        } else {
+            for (def failedJob : failedJobs) {
+                println "Failed job: ${failedJob.absoluteUrl}"
+            }
+        }
+
+    }
+
 }
