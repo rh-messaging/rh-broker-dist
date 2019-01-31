@@ -4,6 +4,7 @@ def build_id
 def build_zip
 def build_tar
 def build_maven
+def buildRuns
 def authProps = [
   'requestProperties' : [
     'Authorization': "Basic ${'mw-build-user:da2011a51dc4a01e9001dd68149225ca'.bytes.encodeBase64()}".toString()
@@ -76,7 +77,9 @@ node () {
         }
 
         if (failedJobs.empty) {
-
+            for (def job : jobs.values()) {
+                      buildRuns += "${job.absoluteUrl}\n"
+                  }
         } else {
             for (def failedJob : failedJobs) {
                 println "Failed job: ${failedJob.absoluteUrl}"
@@ -84,5 +87,8 @@ node () {
         }
 
     }
-
+    stage('Collate Results') {
+        writeFile file: "results.txt", text: buildRuns
+        archiveArtifacts artifacts: 'results.txt''
+    }
 }
