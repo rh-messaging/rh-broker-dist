@@ -30,7 +30,7 @@ node ('dtests-tcn') {
         job: 'early-testing-messaging-prepare',
         parameters: [
             [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/wildfly/' ],
-            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'messaging_upstream' ],
+            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'WFLY-11606' ],
             [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: build_zip]
         ],
         propagate: false
