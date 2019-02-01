@@ -32,7 +32,7 @@ MAVEN_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-7.3.0.GA
 
 echo MAVEN_URL = \"${MAVEN_URL}\"
 
-curl -X PUT https://stagger-rhm.cloud.paas.upshift.redhat.com/api/repos/rh-broker-dist/branches/master/tags/untested -d @- <<EOF
+curl -X PUT  --insecure https://stagger-rhm.cloud.paas.upshift.redhat.com/api/repos/rh-broker-dist/branches/master/tags/untested -d @- <<EOF
 {
     "build_id": "${BUILD_ID}",
     "build_url": "${BUILD_URL}",
