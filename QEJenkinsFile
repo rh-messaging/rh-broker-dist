@@ -11,7 +11,7 @@ def authProps = [
   ]
 ]
 
-node () {
+node ('dtests-tcn') {
     stage('get stagger info') {
         checkout scm
         sh "sh ./scripts/getamq.sh"
