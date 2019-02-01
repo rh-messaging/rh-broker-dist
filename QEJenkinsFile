@@ -11,6 +11,24 @@ def authProps = [
   ]
 ]
 
+@NonCPS
+def getJobsFromView(def viewUrl, def authProps) {
+    def jsonSlurper = new JsonSlurperClassic()
+    def jobs = []
+    def stack = [] as Stack
+    stack << jsonSlurper.parseText(viewUrl.getText(authProps))
+
+    while(!stack.empty()) {
+        def viewOrJob = stack.pop()
+        if (viewOrJob.views) {
+            viewOrJob.views.each { stack << jsonSlurper.parseText("${it.url}/api/json".toURL().getText(authProps)) }
+        } else {
+            jobs.addAll(viewOrJob.jobs)
+        }
+    }
+    return jobs
+}
+
 node ('dtests-tcn') {
     stage('get stagger info') {
         checkout scm
