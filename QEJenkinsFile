@@ -76,9 +76,9 @@ node ('dtests-tcn') {
               parameters: [
                 [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
                 [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
-                [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: params.ARTEMIS_REPO ],
-                [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: params.TESTSUITE_REPO ],
-                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: params.TESTSUITE_BRANCH ]
+                [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: '' ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ]
               ],
               propagate: false
             )
