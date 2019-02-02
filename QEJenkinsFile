@@ -87,21 +87,8 @@ node ('dtests-tcn') {
 
         def jobs = parallel(tasks)
 
-        def failedJobs = []
-        for (def build : jobs.values()) {
-            if (build.result != 'SUCCESS') {
-                failedJobs << build
-            }
-        }
-
-        if (failedJobs.empty) {
-            for (def job : jobs.values()) {
-                      buildRuns += "${job.absoluteUrl}\n"
-                  }
-        } else {
-            for (def failedJob : failedJobs) {
-                println "Failed job: ${failedJob.absoluteUrl}"
-            }
+        for (def job : jobs.values()) {
+            buildRuns += "${job.absoluteUrl}\n"
         }
 
     }
