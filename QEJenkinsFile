@@ -4,7 +4,7 @@ def build_id
 def build_zip
 def build_tar
 def build_maven
-def buildRuns
+def buildRuns = ''
 def authProps = [
   'requestProperties' : [
     'Authorization': "Basic ${'mw-build-user:da2011a51dc4a01e9001dd68149225ca'.bytes.encodeBase64()}".toString()
