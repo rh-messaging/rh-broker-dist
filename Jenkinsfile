@@ -37,7 +37,7 @@ node ("messaging-ci-01.vm2") {
           def emailBody = """
             Building of AMQ failed.
 
-            See job for details: ${eap.absoluteUrl}
+            See job for details: ${amq.absoluteUrl}
           """.stripIndent().trim()
           node {
             emailext body: emailBody, subject: "AMQ Broker nightly prod build ${new Date().format('yyyy-MM-dd')}", to: 'broker-agile@redhat.com'
