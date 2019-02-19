@@ -49,9 +49,9 @@ node ("messaging-ci-01.vm2") {
         build_url = "${amqVariables.BUILD_URL}"
         sh "echo $build_url"
         build_id = "${amqVariables.BUILD_ID}"
-        sh "rm -f REPOSITORY_COORDINATES.properties"
-        sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/extras/REPOSITORY_COORDINATES.properties"
-        amq_broker_redhat_version = sh(script: "grep amq-broker_SCM_REVISION REPOSITORY_COORDINATES.properties|cut -d'=' -f2", returnStdout: true)
+        sh "rm -f repository-artifact-list.txt"
+        sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.3.0.CR1/extras/repository-artifact-list.txt"
+        amq_broker_redhat_version = sh(script: "grep org.jboss.rh-messaging.amq:amq-broker: repository-artifact-list.txt|cut -d':' -f3", returnStdout: true)
         sh "echo amq_broker_redhat_version $amq_broker_redhat_version"
         amq_broker_version = amq_broker_redhat_version.substring(0, amq_broker_redhat_version.indexOf('-'))
         sh "echo amq_broker_version amq_broker_version"
