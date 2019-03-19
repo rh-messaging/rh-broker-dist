@@ -1,12 +1,32 @@
 #!/usr/bin/env bash
 
+if [ -z "$BUILDCONFIG" ]
+then
+    echo "BUILDCONFIG variable not set is not set"
+    exit 1
+fi
+TEMPBUILDFLAG="--tempBuild"
+SKIPLICENSES="--skipLicenses"
+if [ "$TEMPBUILD" == "false" ]
+then
+    TEMPBUILDFLAG=""
+    SKIPLICENSES=""
+    echo "setting to permanent build: $TEMPBUILDFLAG"
+    echo "licenses will be generated: $SKIPLICENSES"
+else
+    echo "setting to temporary build: $TEMPBUILDFLAG"
+    echo "licenses will not be generated: $SKIPLICENSES"
+fi
+
 export PATH=$PATH:/home/jenkins-slave/.local/bin/
 export GIT_SSL_NO_VERIFY=false
 export WORKING_DIR=`pwd`
+BUILD_CONFIG_PATH=../../../build-configurations/amq/broker/$BUILDCONFIG/
 
 echo "WORKING DIR: $WORKING_DIR"
+echo "Build Config path is $BUILD_CONFIG_PATH"
 ls
-
+exit 1
 # Ensure there's enough space in /tmp.
 rm -rf /tmp/* || true
 
@@ -40,7 +60,7 @@ pip install https://github.com/project-ncl/pnc-cli/archive/version-1.4.x.zip
 cd core
 mvn clean install -DskipTests
 cd target
-java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generator.jar -c ../../../build-configurations/amq/broker/7.3/ --skipJavadoc --rebuildMode=FORCE --tempBuild --skipLicenses
+java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generator.jar -c $BUILD_CONFIG_PATH --skipJavadoc --rebuildMode=FORCE $TEMPBUILDFLAG $SKIPLICENSES
 
 # Unpack maven repo and restructure directory to align with staging requirements
 cd target/amq-broker*
