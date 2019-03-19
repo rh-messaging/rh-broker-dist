@@ -26,7 +26,6 @@ BUILD_CONFIG_PATH=../../../build-configurations/amq/broker/$BUILDCONFIG/
 echo "WORKING DIR: $WORKING_DIR"
 echo "Build Config path is $BUILD_CONFIG_PATH"
 ls
-exit 1
 # Ensure there's enough space in /tmp.
 rm -rf /tmp/* || true
 
@@ -56,6 +55,7 @@ activate
 pip install -r docker/root/requirements.txt
 pip install https://github.com/project-ncl/pnc-cli/archive/version-1.4.x.zip
 
+exit 1
 # Build (currently required as there is not official release) and Run the PFG tool
 cd core
 mvn clean install -DskipTests
