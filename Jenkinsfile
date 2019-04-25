@@ -28,7 +28,7 @@ node ("messaging-ci-01.vm2") {
         job: 'amq-pnc-build',
         parameters: [
             [ $class: 'StringParameterValue', name: 'BUILDCONFIG', value: '7.4' ],
-              $class: 'StringParameterValue', name: 'TEMPBUILD', value: 'true' ]
+            [ $class: 'StringParameterValue', name: 'TEMPBUILD', value: 'true' ]
         ],
         propagate: false
         )
