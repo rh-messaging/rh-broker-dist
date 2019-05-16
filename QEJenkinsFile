@@ -47,8 +47,8 @@ node ('dtests-tcn') {
         def eap = build(
         job: 'early-testing-messaging-prepare',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/wildfly/' ],
-            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'WFLY-11606' ],
+            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/jboss-eap7.git' ],
+            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'CD16_Artemis' ],
             [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: build_zip]
         ],
         propagate: false
@@ -78,7 +78,7 @@ node ('dtests-tcn') {
                 [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
                 [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: '' ],
                 [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@bitbucket.org:msgqe/eap-testsuite-mirror.git' ],
-                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'amq-baseline-pm' ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'rvais_changes' ],
                 [ $class: 'StringParameterValue', name: 'AMQ_BROKER_DOWNLOAD_URL', value: build_zip]
               ],
               propagate: false
