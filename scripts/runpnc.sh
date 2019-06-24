@@ -43,7 +43,7 @@ cd ../
 # Checkout the PFG tooling
 git clone https://gitlab.cee.redhat.com/middleware/product-files-generator.git
 cd product-files-generator
-git checkout d0b88e917f12ac06671a5566ef8794da0b6093f5
+git checkout 3226c2ba2eb912d828f7462c935b28167c0e165f
 
 # Set up a virtual environment for Python (to install and run the PNC Client)
 virtualenv `pwd`
