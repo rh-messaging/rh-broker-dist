@@ -17,17 +17,17 @@ node ("messaging-ci-01.vm2") {
         build(
         job: 'amq-prepare-pnc-branch',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'product_branch', value: 'pre-7.4.x' ],
+            [ $class: 'StringParameterValue', name: 'product_branch', value: 'pre-7.5.x' ],
             [ $class: 'StringParameterValue', name: 'rebase_branch', value: 'master' ]
         ],
         propagate: false
         )
     }
-    stage('build amq 7.3') {
+    stage('build amq 7.5') {
         def amq = build(
         job: 'amq-pnc-build',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'BUILDCONFIG', value: '7.4' ],
+            [ $class: 'StringParameterValue', name: 'BUILDCONFIG', value: '7.5' ],
             [ $class: 'StringParameterValue', name: 'TEMPBUILD', value: 'true' ]
         ],
         propagate: false
@@ -49,7 +49,7 @@ node ("messaging-ci-01.vm2") {
         sh "echo $build_url"
         build_id = "${amqVariables.BUILD_ID}"
         sh "rm -f repository-artifact-list.txt"
-        sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.4.0.ER1/extras/repository-artifact-list.txt"
+        sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.5.0.ER1/extras/repository-artifact-list.txt"
         amq_broker_redhat_version = sh(script: "grep org.jboss.rh-messaging.amq:amq-broker: repository-artifact-list.txt|cut -d':' -f3", returnStdout: true)
         sh "echo amq_broker_redhat_version $amq_broker_redhat_version"
         amq_broker_version = amq_broker_redhat_version.substring(0, amq_broker_redhat_version.indexOf('-'))
@@ -63,7 +63,7 @@ node ("messaging-ci-01.vm2") {
         build(
         job: 'sendSuccessEmail',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'AMQ_VERSION', value: '7.4' ],
+            [ $class: 'StringParameterValue', name: 'AMQ_VERSION', value: '7.5' ],
             [ $class: 'StringParameterValue', name: 'BUILD_URL', value: build_url ],
             [ $class: 'StringParameterValue', name: 'amq_broker_version', value: amq_broker_version ],
             [ $class: 'StringParameterValue', name: 'amq_broker_redhat_version', value: amq_broker_redhat_version ]
