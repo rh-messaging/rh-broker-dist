@@ -47,8 +47,9 @@ node ('dtests-tcn') {
         def eap = build(
         job: 'early-testing-messaging-prepare',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/ehsavoie/jboss-eap7.git' ],
-            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'CD16_Artemis' ],
+            //EAP_REPO and EAP_BRANCH are https://github.com/ehsavoie/jboss-eap7.git and CD16_Artemis by default
+            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: '' ],
+            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: '' ],
             [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: build_zip]
         ],
         propagate: false
