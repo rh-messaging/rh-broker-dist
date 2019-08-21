@@ -59,7 +59,8 @@ pip install https://github.com/project-ncl/pnc-cli/archive/version-1.4.x.zip
 cd core
 mvn clean install -DskipTests
 cd target
-java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generator.jar -c $BUILD_CONFIG_PATH --skipJavadoc --rebuildMode=FORCE $TEMPBUILDFLAG $SKIPLICENSES
+# java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generator.jar -c $BUILD_CONFIG_PATH --skipJavadoc --rebuildMode=FORCE $TEMPBUILDFLAG $SKIPLICENSES
+java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generator.jar -c $BUILD_CONFIG_PATH --skipJavadoc --skipBuilds --skipPncUpdate -verbose
 
 # Unpack maven repo and restructure directory to align with staging requirements
 cd target/amq-broker*
