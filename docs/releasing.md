@@ -137,8 +137,17 @@ Smoke testing the new build
 
     Current list of war's :
     
-    dispatch-hawtio-console.war
-    artemis-plugin.war
-    redhat-branding.war
-    The 'hawtio-web.war' and 'jolokia-war-1.3.2.redhat-1.war' are provided by fuse and contain non-redhat jars, there is a Vault exception for them
+    - redhat-branding.war
+    - console.war
+    - web/artemis-plugin.war
+    - metrics.war
+    <br/>
+    The 'hawtio-web.war' and 'jolokia-war-1.3.2.redhat-1.war' are provided by fuse and contain non-redhat jars, there is a Vault exception for them. The 'console.war' contains non-redhat jars of 'hawtio-web.war', to exclude from the check:
     
+    - commons-io-2.2.jar
+    - httpcore-4.4.4.jar
+    - org.osgi.core-4.3.0.jar
+    - org.osgi.enterprise-4.2.0.jar
+    - httpclient-4.5.2.jar
+    - commons-logging-1.0.3.jar
+    - commons-fileupload-1.3.1.jar
