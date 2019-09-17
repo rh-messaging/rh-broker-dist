@@ -18,7 +18,7 @@ node ("messaging-ci-01.vm2") {
         job: 'amq-prepare-pnc-branch',
         parameters: [
             [ $class: 'StringParameterValue', name: 'product_branch', value: 'master-pnc' ],
-            [ $class: 'StringParameterValue', name: 'rebase_branch', value: 'master' ]
+            [ $class: 'StringParameterValue', name: 'merge_branch', value: 'master' ]
         ],
         propagate: false
         )
