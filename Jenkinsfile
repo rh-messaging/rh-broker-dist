@@ -14,7 +14,7 @@ node ("messaging-ci-01.vm2") {
         )
     }
     stage('prepare prod branch') {
-        build(
+        def amqPreparePncBranch = build(
         job: 'amq-prepare-pnc-branch',
         parameters: [
             [ $class: 'StringParameterValue', name: 'product_branch', value: 'master-pnc' ],
@@ -22,6 +22,17 @@ node ("messaging-ci-01.vm2") {
         ],
         propagate: false
         )
+        if (amqPreparePncBranch.result != 'SUCCESS') {
+          def emailBody = """
+            Preparing AMQ prod branch failed.
+
+            See job for details: ${amqPreparePncBranch.absoluteUrl}
+          """.stripIndent().trim()
+          node {
+            emailext body: emailBody, subject: "AMQ Broker nightly prod build ${new Date().format('yyyy-MM-dd')}", to: 'amq-broker-agile@redhat.com'
+            throw new Exception("Production job failed. Cannot continue.")
+          }
+        }
     }
     stage('build amq nightly') {
         def amq = build(
