@@ -89,7 +89,10 @@ Releasing a new minor
 Smoke testing the new build
 ---------------------------
 
-1. Start broker and check web user interface
+1. Inspect the sources
+   Unzip sources package and check the version alignment. The amq-broker/pom.xml/<artemis-version> must match activemq-artemis/pom.xml/<version>.
+   
+2. Start broker and check web user interface
    After installing the distribution, setup and run a new broker :
    
     ```console
@@ -113,7 +116,7 @@ Smoke testing the new build
 
    Point you browser at the [console](http://localhost:8161) then check that the redhat branding and links work, login into the console with the credentials you setup the broker with earlier.
    
-2.  Inspect the runtime libs and war's
+3. Inspect the runtime libs and war's
     
     Check that the lib directory in the instalation contains only 'redhat' jars (except the artemis-boot.jar which is striped of the version at build time) :
     
