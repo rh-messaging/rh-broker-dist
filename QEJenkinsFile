@@ -79,7 +79,8 @@ node ('dtests-tcn') {
                 [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: '' ],
                 [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@gitlab.cee.redhat.com:dbruscin/eap-testsuite-mirror.git' ],
                 [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'nightly_fixes' ],
-                [ $class: 'StringParameterValue', name: 'AMQ_BROKER_DOWNLOAD_URL', value: build_zip]
+                [ $class: 'StringParameterValue', name: 'AMQ_BROKER_DOWNLOAD_URL', value: build_zip],
+                [ $class: 'StringParameterValue', name: 'SUT_URL', value: build_zip]                
               ],
               propagate: false
             )
