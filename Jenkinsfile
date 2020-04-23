@@ -1,6 +1,7 @@
 import groovy.json.JsonSlurperClassic
 
 def amqZipUrl
+def amq_broker_dir
 def amq_broker_version
 def amq_broker_redhat_version
 def build_url
@@ -59,12 +60,14 @@ node ("messaging-ci-01.vm2") {
         build_url = "${amqVariables.BUILD_URL}"
         sh "echo $build_url"
         build_id = "${amqVariables.BUILD_ID}"
+        amq_broker_dir = sh(returnStdout: true, script: "curl ${amq.absoluteUrl}/artifact/amq-broker-dir.txt").tokenize('\n')[-1]
+        sh "echo amq_broker_dir $amq_broker_dir"
         sh "rm -f repository-artifact-list.txt"
-        sh "wget ${amq.absoluteUrl}/artifact/amq-broker-7.6.0.ER1/extras/repository-artifact-list.txt"
+        sh "wget ${amq.absoluteUrl}/artifact/${amq_broker_dir}/extras/repository-artifact-list.txt"
         amq_broker_redhat_version = sh(script: "grep org.jboss.rh-messaging.amq:amq-broker: repository-artifact-list.txt|cut -d':' -f3", returnStdout: true)
         sh "echo amq_broker_redhat_version $amq_broker_redhat_version"
         amq_broker_version = amq_broker_redhat_version.substring(0, amq_broker_redhat_version.indexOf('-'))
-        sh "echo amq_broker_version amq_broker_version"
+        sh "echo amq_broker_version $amq_broker_version"
     }
     stage ("Update Stagger") {
         checkout scm
