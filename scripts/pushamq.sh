@@ -28,7 +28,7 @@ TAR_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_R
 
 echo TAR_URL = \"${TAR_URL}\"
 
-MAVEN_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-7.5.0.GA-maven-repository
+MAVEN_URL=${BUILD_URL}/artifact/amq-broker-${BROKER_VERSION}/amq-broker-${BROKER_VERSION}-maven-repository
 
 echo MAVEN_URL = \"${MAVEN_URL}\"
 
