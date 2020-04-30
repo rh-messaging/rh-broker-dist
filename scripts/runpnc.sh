@@ -64,8 +64,12 @@ java -Djavax.net.ssl.trustStore=/etc/pki/java/cacerts -jar product-files-generat
 
 # Unpack maven repo and restructure directory to align with staging requirements
 cd target/amq-broker*
-basename $PWD > $WORKING_DIR/amq-broker-dir.txt
 unzip amq-broker-*-maven-repository.zip
+if [ $? -ne 0 ]
+then
+  exit 1
+fi
+basename $PWD > $WORKING_DIR/amq-broker-dir.txt
 cp amq-broker-*-maven-repository/maven-repository/org/jboss/rh-messaging/amq/amq-broker/*/amq-broker-*-bin.* .
 
 cd ../
