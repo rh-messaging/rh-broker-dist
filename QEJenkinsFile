@@ -51,7 +51,7 @@ node ('dtests-tcn') {
         job: 'early-testing-messaging-prepare',
         parameters: [
             [ $class: 'StringParameterValue', name: 'EAP_REPO', value: '' ],
-            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'CD19_Artemis_2.12' ],
+            [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'EAP_7.4.0.CD21-AMQ' ],
             [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: build_zip]
         ],
         propagate: false
