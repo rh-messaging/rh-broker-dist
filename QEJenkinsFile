@@ -80,8 +80,8 @@ node ('dtests-tcn') {
                 [ $class: 'StringParameterValue', name: 'EAP_ZIP_URL', value: eapZipUrl ],
                 [ $class: 'StringParameterValue', name: 'EAP_VERSION', value: clientsVersion ],
                 [ $class: 'StringParameterValue', name: 'ARTEMIS_REPO', value: '' ],
-                [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@gitlab.cee.redhat.com:msgqe/eap-testsuite-mirror.git' ],
-                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'rvais_changes' ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_REPO', value: 'git@gitlab.cee.redhat.com:dbruscin/eap-testsuite-mirror.git' ],
+                [ $class: 'StringParameterValue', name: 'TESTSUITE_BRANCH', value: 'update_artemis_2.16' ],
                 [ $class: 'StringParameterValue', name: 'AMQ_BROKER_DOWNLOAD_URL', value: build_zip],
                 [ $class: 'StringParameterValue', name: 'CUSTOM_MAVEN_REPO_ZIP_URL', value: build_maven_zip],
                 [ $class: 'StringParameterValue', name: 'SUT_URL', value: build_zip]
