@@ -50,7 +50,7 @@ node ('dtests-tcn') {
         def eap = build(
         job: 'early-testing-messaging-prepare',
         parameters: [
-            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: '' ],
+            [ $class: 'StringParameterValue', name: 'EAP_REPO', value: 'https://github.com/brusdev/jboss-eap7.git' ],
             [ $class: 'StringParameterValue', name: 'EAP_BRANCH', value: 'EAP_7.4.0.CD21-AMQ' ],
             [ $class: 'StringParameterValue', name: 'ARTEMIS_ZIP_URL', value: build_zip]
         ],
